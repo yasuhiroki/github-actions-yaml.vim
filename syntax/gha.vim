@@ -15,7 +15,6 @@ syn region GhaDollerSyntax matchgroup=PreProc start="${{" end="}}" containedin=y
 exe 'syn match GhaKeywords /'.s:gha_keywords_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 exe 'syn match GhaKeywordsConditional /'.s:gha_keywords_conditional_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 exe 'syn match GhaKeywordsStep /'.s:gha_keywords_step_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
-exe 'syn match GhaKeywordsStep /'.s:gha_keywords_step_key.'/'
 
 syn match GhaKeywordsDollerSyntax /\%(github\|job\|steps\|runner\|secrets\|strategy\|matrix\)/ contained containedin=GhaDollerSyntax
 
