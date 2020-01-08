@@ -7,6 +7,12 @@ Vim plugin for GitHub Actions (yaml file)
 - Syntax Highlight (incomplete)
 - Completion of workflow keywords
 
+## Highlighting Example
+
+| before | after |
+| --- | --- |
+| ![before](./img/before.png) | ![after](./img/after.png) |
+
 # Installation
 
 ## dein.vim
