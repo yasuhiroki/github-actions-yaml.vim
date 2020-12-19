@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: source.vim
-        run: echo "TODO: soruce test/source.vim in vim by cli"
+        run: "echo TODO: soruce test/source.vim in vim by cli"
