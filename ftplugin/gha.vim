@@ -25,7 +25,7 @@ function! gha#Complete(findstart, base)
     endif
 endfunction
 
-if exists("&ofu")
+if exists("&ofu") && g:gha_completion
   setlocal omnifunc=gha#Complete
 endif
 
