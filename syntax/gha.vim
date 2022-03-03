@@ -10,19 +10,19 @@ let s:gha_keywords_key = '\%(^\|\s\)\@<=\zs\%('.join(gha#GetKeywords(), '\|').'\
 let s:gha_keywords_conditional_key = '\%(^\|\s\)\@<=\zs\%('.join(gha#GetKeywordsConditional(), '\|').'\)\ze\%(\s*:\|$\)'
 let s:gha_keywords_step_key = '\%([0-9A-Za-z_-]\)\@<!\%('.join(gha#GetKeywordsStep(), '\|').'\)\ze\%(\s*:\|$\)'
 
-syn region GhaDollerSyntax matchgroup=PreProc start="${{" end="}}" containedin=yamlPlainScalar keepend
+syn region GhaDollarSyntax matchgroup=PreProc start="${{" end="}}" containedin=yamlPlainScalar keepend
 
 exe 'syn match GhaKeywords /'.s:gha_keywords_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 exe 'syn match GhaKeywordsConditional /'.s:gha_keywords_conditional_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 exe 'syn match GhaKeywordsStep /'.s:gha_keywords_step_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 
 " https://docs.github.com/en/actions/learn-github-actions/contexts
-syn match GhaKeywordsDollerSyntax /\%(\.\)\@<!\<\%(github\|env\|job\|steps\|runner\|secrets\|strategy\|matrix\|inputs\)\>/ contained containedin=GhaDollerSyntax
+syn match GhaKeywordsDollarSyntax /\%(\.\)\@<!\<\%(github\|env\|job\|steps\|runner\|secrets\|strategy\|matrix\|inputs\)\>/ contained containedin=GhaDollarSyntax
 
 hi link GhaKeywords Keyword
 hi link GhaKeywordsConditional Conditional
 hi link GhaKeywordsStep Define
 hi link GhaKeywordsParameter Keyword
-hi link GhaKeywordsDollerSyntax Keyword
+hi link GhaKeywordsDollarSyntax Keyword
 
 let &cpo = s:save_cpo
