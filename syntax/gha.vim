@@ -31,16 +31,16 @@ syn region GhaString start=/'/ skip=/''/ end=/'/ contained containedin=GhaDollar
 syn match GhaOperator /\%(||\|&&\|==\|!=\|>=\|>\|<=\|<\|!\)/ contained containedin=GhaDollarSyntax
 exe 'syn region GhaFunction matchgroup=GhaKeywordsFunction start=/\<\%(' . join(gha#GetKeywordsFunction(), '\|') . '\)\ze(/ end=/\ze)/ contained containedin=GhaDollarSyntax contains=@GhaLiterals,GhaOperator,GhaKeywordsDollarSyntax'
 
-hi link GhaKeywords Keyword
-hi link GhaKeywordsConditional Conditional
-hi link GhaKeywordsStep Define
-hi link GhaKeywordsParameter Keyword
-hi link GhaKeywordsDollarSyntax Keyword
-hi link GhaNull Keyword
-hi link GhaBoolean Boolean
-hi link GhaNumber Number
-hi link GhaString String
-hi link GhaOperator Operator
-hi link GhaKeywordsFunction Function
+hi def link GhaKeywords Keyword
+hi def link GhaKeywordsConditional Conditional
+hi def link GhaKeywordsStep Define
+hi def link GhaKeywordsParameter Keyword
+hi def link GhaKeywordsDollarSyntax Keyword
+hi def link GhaNull Keyword
+hi def link GhaBoolean Boolean
+hi def link GhaNumber Number
+hi def link GhaString String
+hi def link GhaOperator Operator
+hi def link GhaKeywordsFunction Function
 
 let &cpo = s:save_cpo
