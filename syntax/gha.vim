@@ -26,4 +26,3 @@ hi link GhaKeywordsParameter Keyword
 hi link GhaKeywordsDollerSyntax Keyword
 
 let &cpo = s:save_cpo
-
