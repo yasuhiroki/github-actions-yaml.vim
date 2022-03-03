@@ -48,6 +48,21 @@ let s:gha_keywords_step = [
             \ 'with'
             \ ]
 
+let s:gha_keywords_function = [
+            \ 'contains',
+            \ 'startsWith',
+            \ 'endsWith',
+            \ 'format',
+            \ 'join',
+            \ 'toJSON',
+            \ 'fromJSON',
+            \ 'hashFiles',
+            \ 'success',
+            \ 'always',
+            \ 'cancelled',
+            \ 'failure'
+            \ ]
+
 function! gha#GetKeywords()
     return s:gha_keywords
 endfunction
@@ -60,10 +75,15 @@ function! gha#GetKeywordsStep()
     return s:gha_keywords_step
 endfunction
 
+function! gha#GetKeywordsFunction()
+    return s:gha_keywords_function
+endfunction
+
 function! gha#GetKeywordsAll()
     return s:gha_keywords
                 \ + s:gha_keywords_conditional
                 \ + s:gha_keywords_step
+                \ + s:gha_keywords_function
 endfunction
 
 let &cpo = s:save_cpo

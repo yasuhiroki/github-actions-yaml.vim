@@ -19,10 +19,28 @@ exe 'syn match GhaKeywordsStep /'.s:gha_keywords_step_key.'/ contained nextgroup
 " https://docs.github.com/en/actions/learn-github-actions/contexts
 syn match GhaKeywordsDollarSyntax /\%(\.\)\@<!\<\%(github\|env\|job\|steps\|runner\|secrets\|strategy\|matrix\|inputs\)\>/ contained containedin=GhaDollarSyntax
 
+" https://docs.github.com/en/actions/learn-github-actions/expressions
+syn cluster GhaLiterals contains=GhaNull,GhaBoolean,GhaNumber,GhaString
+syn keyword GhaNull null contained containedin=GhaDollarSyntax
+syn keyword GhaBoolean true false contained containedin=GhaDollarSyntax
+" NOTE: The "Number" definition in dollar syntax is equal to JSON's one, so
+" this syntax pattern is imported from "$VIMRUNTIME/syntax/json.vim" with
+" small fixes.
+syn match GhaNumber /\<-\=\<\%(0\|[1-9]\d*\)\%(\.\d\+\)\=\%([eE][-+]\=\d\+\)\=\>/ contained containedin=GhaDollarSyntax
+syn region GhaString start=/'/ skip=/''/ end=/'/ contained containedin=GhaDollarSyntax
+syn match GhaOperator /\%(||\|&&\|==\|!=\|>=\|>\|<=\|<\|!\)/ contained containedin=GhaDollarSyntax
+exe 'syn region GhaFunction matchgroup=GhaKeywordsFunction start=/\<\%(' . join(gha#GetKeywordsFunction(), '\|') . '\)\ze(/ end=/\ze)/ contained containedin=GhaDollarSyntax contains=@GhaLiterals,GhaOperator,GhaKeywordsDollarSyntax'
+
 hi link GhaKeywords Keyword
 hi link GhaKeywordsConditional Conditional
 hi link GhaKeywordsStep Define
 hi link GhaKeywordsParameter Keyword
 hi link GhaKeywordsDollarSyntax Keyword
+hi link GhaNull Keyword
+hi link GhaBoolean Boolean
+hi link GhaNumber Number
+hi link GhaString String
+hi link GhaOperator Operator
+hi link GhaKeywordsFunction Function
 
 let &cpo = s:save_cpo
