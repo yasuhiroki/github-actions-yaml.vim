@@ -3,4 +3,5 @@
 " Maintainer: yasuhiroki <yasuhiroki.duck@gmail.com>
 " License:    MIT Copyright (c) 2019 yasuhiroki
 
-au BufNewFile,BufReadPost */.github/workflows/*.yml setlocal filetype=yaml.gha
+" https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#about-yaml-syntax-for-workflows
+au BufNewFile,BufReadPost */.github/workflows/*.y{a,}ml setlocal filetype=yaml.gha
