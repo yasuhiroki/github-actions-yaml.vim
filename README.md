@@ -4,7 +4,7 @@ Vim plugin for GitHub Actions (yaml file)
 
 # Feature
 
-- Syntax Highlight (incomplete)
+- Syntax Highlight
 - Completion of workflow keywords
 
 ## Highlighting Example

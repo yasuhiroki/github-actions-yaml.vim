@@ -7,4 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: env
-        run: echo TODO: soruce test/source.vim in vim by cli
+        if: ${{ job.status == 'failure' && failure() }}
+        run: |
+          echo ${{ fromJSON(env.continue) }} and ${{ env['PATH'] }}
