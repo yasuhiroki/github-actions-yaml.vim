@@ -4,4 +4,5 @@
 " License:    MIT Copyright (c) 2019 yasuhiroki
 
 " https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#about-yaml-syntax-for-workflows
-au BufNewFile,BufReadPost */.github/workflows/*.y{a,}ml setlocal filetype=yaml.gha
+" https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#about-yaml-syntax-for-github-actions
+au BufNewFile,BufReadPost */.github/workflows/*.y{a,}ml,action.y{a,}ml setlocal filetype=yaml.gha
