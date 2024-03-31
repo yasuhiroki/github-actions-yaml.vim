@@ -6,12 +6,17 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:gha_keywords = [
+let s:gha_workflow_keywords = [
             \ 'cmd',
+            \ 'uses',
+            \ 'shell',
+            \ 'concurrency',
             \ 'container',
-            \ 'create',
-            \ 'docker',
+            \ 'continue-on-error',
+            \ 'credentials',
+            \ 'defaults',
             \ 'env',
+            \ 'environment',
             \ 'fail-fast',
             \ 'image',
             \ 'jobs',
@@ -22,14 +27,44 @@ let s:gha_keywords = [
             \ 'on',
             \ 'options',
             \ 'paths',
+            \ 'permissions',
             \ 'ports',
+            \ 'run',
+            \ 'run-name',
             \ 'runs-on',
             \ 'schedule',
+            \ 'secrets',
             \ 'services',
             \ 'steps',
             \ 'strategy',
+            \ 'timeout-minutes',
             \ 'types',
-            \ 'volumes'
+            \ 'volumes',
+            \ 'with',
+            \ 'working-directory',
+            \ ]
+
+let s:gha_action_keywords = [
+            \ 'author',
+            \ 'branding',
+            \ 'color',
+            \ 'default',
+            \ 'deprecationMessage',
+            \ 'description',
+            \ 'icon',
+            \ 'inputs',
+            \ 'main',
+            \ 'name',
+            \ 'outputs',
+            \ 'post',
+            \ 'post-if',
+            \ 'pre',
+            \ 'pre-if',
+            \ 'required',
+            \ 'runs',
+            \ 'steps',
+            \ 'using',
+            \ 'value',
             \ ]
 
 let s:gha_keywords_conditional = [
@@ -39,13 +74,17 @@ let s:gha_keywords_conditional = [
 let s:gha_keywords_step = [
             \ 'args',
             \ 'continue-on-error',
+            \ 'defaults',
             \ 'entrypoint',
             \ 'env',
             \ 'id',
+            \ 'name',
             \ 'run',
+            \ 'shell',
             \ 'timeout-minutes',
             \ 'uses',
-            \ 'with'
+            \ 'with',
+            \ 'working-directory',
             \ ]
 
 let s:gha_keywords_function = [
@@ -64,7 +103,7 @@ let s:gha_keywords_function = [
             \ ]
 
 function! gha#GetKeywords()
-    return s:gha_keywords
+    return s:gha_workflow_keywords + s:gha_action_keywords
 endfunction
 
 function! gha#GetKeywordsConditional()
@@ -80,7 +119,8 @@ function! gha#GetKeywordsFunction()
 endfunction
 
 function! gha#GetKeywordsAll()
-    return s:gha_keywords
+    return s:gha_workflow_keywords
+                \ + s:gha_action_keywords
                 \ + s:gha_keywords_conditional
                 \ + s:gha_keywords_step
                 \ + s:gha_keywords_function

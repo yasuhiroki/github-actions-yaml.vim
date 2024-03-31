@@ -8,13 +8,14 @@ set cpo&vim
 
 let s:gha_keywords_key = '\%(^\|\s\)\@<=\zs\%('.join(gha#GetKeywords(), '\|').'\)\ze\%(\s*:\|$\)'
 let s:gha_keywords_conditional_key = '\%(^\|\s\)\@<=\zs\%('.join(gha#GetKeywordsConditional(), '\|').'\)\ze\%(\s*:\|$\)'
-let s:gha_keywords_step_key = '\%([0-9A-Za-z_-]\)\@<!\%('.join(gha#GetKeywordsStep(), '\|').'\)\ze\%(\s*:\|$\)'
+let s:gha_keywords_step_key = '\%([0-9A-Za-z_-]\)\@<!\%>6c\%('.join(gha#GetKeywordsStep(), '\|').'\)\ze\%(\s*:\|$\)'
 
 syn region GhaDollarSyntax matchgroup=PreProc start="${{" end="}}" containedin=yamlPlainScalar
 
 exe 'syn match GhaKeywords /'.s:gha_keywords_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 exe 'syn match GhaKeywordsConditional /'.s:gha_keywords_conditional_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 exe 'syn match GhaKeywordsStep /'.s:gha_keywords_step_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
+unlet s:gha_keywords_key s:gha_keywords_conditional_key s:gha_keywords_step_key
 
 " https://docs.github.com/en/actions/learn-github-actions/contexts
 syn match GhaKeywordsDollarSyntax /\%(\.\)\@<!\<\%(github\|env\|vars\|jobs\?\|steps\|runner\|secrets\|strategy\|matrix\|needs\|inputs\)\.\@=/ contained containedin=GhaDollarSyntax
@@ -44,3 +45,4 @@ hi def link GhaOperator Operator
 hi def link GhaKeywordsFunction Function
 
 let &cpo = s:save_cpo
+unlet s:save_cpo
