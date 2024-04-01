@@ -17,7 +17,7 @@ exe 'syn match GhaKeywordsConditional /'.s:gha_keywords_conditional_key.'/ conta
 exe 'syn match GhaKeywordsStep /'.s:gha_keywords_step_key.'/ contained nextgroup=yamlKeyValueDelimiter containedin=yamlBlockMappingKey'
 
 " https://docs.github.com/en/actions/learn-github-actions/contexts
-syn match GhaKeywordsDollarSyntax /\%(\.\)\@<!\<\%(github\|env\|job\|steps\|runner\|secrets\|strategy\|matrix\|inputs\)\>/ contained containedin=GhaDollarSyntax
+syn match GhaKeywordsDollarSyntax /\%(\.\)\@<!\<\%(github\|env\|vars\|jobs\?\|steps\|runner\|secrets\|strategy\|matrix\|needs\|inputs\)\.\@=/ contained containedin=GhaDollarSyntax
 
 " https://docs.github.com/en/actions/learn-github-actions/expressions
 syn cluster GhaLiterals contains=GhaNull,GhaBoolean,GhaNumber,GhaString
