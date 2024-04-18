@@ -1,0 +1,39 @@
+name: custom action
+description: my action
+branding:
+  icon: upload-cloud
+  color: blue
+inputs:
+  input1:
+    description: desc
+    required: true
+    default: default value
+outputs:
+  output1:
+    description: desc
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    INPUT1: ${{ inputs.input1 }}
+  args:
+    - ${{ inputs.input1 }}
+  pre-entrypoint: 'setup.sh'
+  post-entrypoint: 'cleanup.sh'
+  entrypoint: 'main.sh'
+runs:
+  using: 'node20'
+  main: 'index.js'
+  pre: 'setup.js'
+  pre-if: runner.os == 'linux'
+  post: 'cleanup.js'
+  post-if: runner.os == 'linux'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+    - run: ${{ github.action_path }}/test/script.sh
+      shell: bash
+      id: sample_id
+      if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
+

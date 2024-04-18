@@ -1,12 +1,163 @@
-on: push
-name: test
+name: Test
+run-name: ${{ github.actor }} is testing
+on:
+  push:
+  label:
+    types: [created, edited]
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron:  '30 5,17 * * *'
+  workflow_call:
+    inputs:
+      username:
+        description: 'A username passed from the caller workflow'
+        default: 'john-doe'
+        required: false
+        type: string
+    outputs:
+      workflow_output1:
+        description: "The first job output"
+        value: ${{ jobs.my_job.outputs.job_output1 }}
+    secrets:
+      access-token:
+        description: 'A token passed from the caller workflow'
+        required: false
+  workflow_run:
+    workflows: ["example"]
+    types: [requested]
+    branches:
+      - 'releases/**'
+    branches-ignore:
+      - "canary"
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+        required: true
+permissions: read-all
+env:
+  SERVER: production
+defaults:
+  run:
+    shell: bash
+    working-directory: ./scripts
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
-    name: test
-    runs-on: ubuntu-latest
+  example:
+    name: My first job
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      deployments: read
+      id-token: write
+      issues: write
+      discussions: write
+      packages: write
+      pages: none
+      pull-requests: none
+      repository-projects: none
+      security-events: none
+      statuses: none
+    needs: job1
+    if: ${{ always() }}
+    runs-on:
+      group: ubuntu-runners
+      labels: ubuntu-20.04-16core
+    environment: staging_environment
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+    env:
+      FIRST_NAME: Mona
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./scripts
     steps:
-      - uses: actions/checkout@v1
-      - name: env
-        if: ${{ job.status == 'failure' && failure() }}
+      - name: My first step
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'unassigned' }}
+        uses: actions/checkout@v4
+        with:
+          repository: octocat/my-private-repo
+          ref: v1.0
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          path: ./.github/actions/my-private-repo
+          args: The ${{ github.event_name }} event triggered this step.
+          entrypoint: /a/different/executable
+      - name: Print a greeting
+        shell: bash
+        env:
+          MY_VAR: Hi there! My name is
         run: |
-          echo ${{ fromJSON(env.continue) }} and ${{ env['PATH'] }}
+          echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
+  job1:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        version: [10, 12, 14]
+        os: [ubuntu-latest, windows-latest]
+        exclude:
+          - os: ubuntu-latest
+            version: 12
+          - os: windows-latest
+            version: 10
+
+    steps:
+      - run: echo
+  job2:
+    strategy:
+      max-parallel: 2
+      matrix:
+        fruit: [apple, pear]
+        animal: [cat, dog]
+        include:
+          - color: green
+          - color: pink
+            animal: cat
+          - fruit: apple
+            shape: circle
+          - fruit: banana
+          - fruit: banana
+            animal: cat
+    container:
+      image: node:18
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1
+    services:
+      nginx:
+        image: nginx
+        ports:
+          - 8080:80
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ secrets.github_token }}
+    steps:
+      - run: echo
+  job3:
+    uses: octo-org/example-repo/.github/workflows/called-workflow.yml@main
+    with:
+      username: mona
+
+
+
